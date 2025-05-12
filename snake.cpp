@@ -1,11 +1,22 @@
 #include <iostream>
 #include <random>
+#include <string>
 
 
 char player_input() {
-    char char_input;
-    std::cin >> char_input;
-    return char_input;
+    char char_in = ' ';
+    std::string string_in;
+    std::cout << "Next Move: ";
+    std::getline(std::cin, string_in);
+    char_in = string_in[0];
+    while (char_in != 'w' && char_in != 'a' && char_in != 's' && char_in != 'd' && char_in != '\0') {
+        std::cout << "Invalid move.\n Next Move: ";
+        std::getline(std::cin, string_in);
+        char_in = string_in[0];
+    }
+    
+    //std::cout << "Your input:" << char_in << "|" <<std::endl;
+    return char_in;
 }
 
 struct Point{
@@ -44,7 +55,6 @@ int main() {
 
     std::cout << "Snake Game!!!\nUse the characters wasd to move" << std::endl;
     
-    //inputted_direction = player_input();
     //std::cout << "Snake row and col are " << snake_head.row << ", " << snake_head.col << std::endl;
     //std::cout << "Apple row and col are " << apple.row << ", " << apple.col << std::endl;
     //std::cout << "You inputted:" << inputted_direction << std::endl;
@@ -62,15 +72,16 @@ int main() {
             for (int c = 0; c < width; c++) {
                 // Display apple
                 if (apple.row==r && apple.col==c)
-                    {char_at_coord = 'a';}
+                    {char_at_coord = '@';}
                 // Display snake head
                 else if (snake_head.row==r && snake_head.col==c)
-                    {char_at_coord = 'o';}
+                    {char_at_coord = '#';}
                 // Display remaining snake array
                 else
                     {
-                        char_at_coord = '\0';
-                        std::cout << snake_board[r][c];
+                        //char_at_coord = '\0'; 
+                        char_at_coord = 96 + snake_board[r][c];
+                        //std::cout << snake_board[r][c];
                     }
                 //display character at (r, c)
                 std::cout << char_at_coord;
@@ -84,23 +95,24 @@ int main() {
         std::cout << std::endl;
         // Display score
         std::cout << "Score: " << snake_length - 1 << std::endl;
-        return 0;
+        //return 0;
 
     
-    // Update next move if player inputs one
-    // Move snake head coords by one according to the next move
-    // Check the bounds and possibly end game
-    // Check if it's the apple coords; if so then:
-    // - increment the length by one
-    // - set the element at the snake head coords to length
-    // - if the length is not the maximum, try setting new random apple coords until that spot does not have a snake in it
-    // - else if the length is the maximum then break the loop
-    // else if that spot on the snake array is not zero or 1 then
-    // -break the loop
-    // else then
-    // - subtract 1 from every element in the 2d board array if it's greater than zero
-    // - set the element at the snake head coords to length
-    // If the length is maximum, break the loop
+        // Update next move if player inputs one
+        inputted_direction = player_input();
+        // Move snake head coords by one according to the next move
+        // Check the bounds and possibly end game
+        // Check if it's the apple coords; if so then:
+        // - increment the length by one
+        // - set the element at the snake head coords to length
+        // - if the length is not the maximum, try setting new random apple coords until that spot does not have a snake in it
+        // - else if the length is the maximum then break the loop
+        // else if that spot on the snake array is not zero or 1 then
+        // -break the loop
+        // else then
+        // - subtract 1 from every element in the 2d board array if it's greater than zero
+        // - set the element at the snake head coords to length
+        // If the length is maximum, break the loop
     }
 // Display final screen
 // Print final length
