@@ -3,17 +3,17 @@
 #include <string>
 
 // size of the board
-const int height = 3; 
-const int width  = 3;
+const int height {3}; 
+const int width {3};
+int snake_board[height][width];
 struct Point{int row, col; bool at_pos(struct Point other_point);};
 struct Point apple;
-int snake_board[height][width];
 struct Point snake_head;
 
 // function to display the current snake board state
 void display_board() {
     // - display character
-    char char_at_coord = 'E';
+    char char_at_coord {'E'};
     std::cout << " ";
         for (int c = 0; c < width + 2; c++) {
             std::cout << "-";
@@ -46,9 +46,9 @@ void display_board() {
         std::cout << std::endl;
 }
 
-// function to collect only valid player input
+// function to collect only valid player inputs
 char player_input(char last_move) {
-    char char_in = ' ';
+    char char_in {' '};
     std::string string_in;
     std::cout << "Next Move: ";
     std::getline(std::cin, string_in);
@@ -66,34 +66,32 @@ char player_input(char last_move) {
     return char_in;
 }
 
-// struct Point{
-//     int row, col;
-//     // method to see if 2 points are the same
-//     bool at_pos(struct Point other_point) {
-//         return row == other_point.row && col == other_point.col;
-//     }
-// };
+// method to see if 2 points are the same
 bool Point::at_pos(struct Point other_point){return row == other_point.row && col == other_point.col;}
 
 int main() {
+
+    // TODO: stuff below should probably be in a reset method
+    // don't forget to fix the scope of variables
+
     std::random_device rd;  // a seed source for the random number engine
     std::mt19937 gen(rd()); // mersenne_twister_engine seeded with rd()
     std::uniform_int_distribution<> randrow(0, height-1);
     std::uniform_int_distribution<> randcol(0, width-1);
     // - snake head row, col (center)
     snake_head = {height/2, width/2};
-    // - apple row, col (random) 
+    // apple row, col (random) 
     // makes sure initial apple isn't located on top of the snake
     do {
         apple = {randrow(gen), randcol(gen)};
     }
     while(apple.at_pos(snake_head));
     // win condition (only true when full length)
-    bool winning = false;
+    bool winning{false};
     // - next move char (up)
-    char inputted_direction = 'w';
+    char inputted_direction {'w'};
     // - snake length (1)
-    int snake_length = 1;
+    int snake_length {1};
     // - board 2D array of zeros
     for (int r = 0; r < height; r++) {
         for (int c = 0; c < width; c++) {
@@ -104,6 +102,10 @@ int main() {
 
 
     std::cout << "Snake Game!!!\nUse the characters wasd to move" << std::endl;
+
+    // end reset method
+
+
     
     //std::cout << "Snake row and col are " << snake_head.row << ", " << snake_head.col << std::endl;
     //std::cout << "Apple row and col are " << apple.row << ", " << apple.col << std::endl;
@@ -148,6 +150,7 @@ int main() {
             snake_board[snake_head.row][snake_head.col] = snake_length;
             // - if the length is the maximum then break the loop
             if (snake_length == width * height) {
+                    apple.row = width + 2; // won't be displayed in end screen
                     winning = true;
                     break;
             }
@@ -179,6 +182,7 @@ int main() {
 
     }
 // Display final screen
+display_board();
 // Print final length
 std::cout << "Your final length was: " << snake_length << std::endl;
 // Print whether they win or lose
