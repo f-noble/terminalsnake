@@ -2,49 +2,21 @@
 #include <random>
 #include <string>
 
-// size of the board
-const int height {3}; 
-const int width {3};
-int snake_board[height][width];
-struct Point{int row, col; bool at_pos(struct Point other_point);};
-struct Point apple;
-struct Point snake_head;
+#include "Point.hpp"
+#include "Display.hpp"
+#include "SnakeGlobals.hpp"
 
+//extern int snake_board[height][width];
+//extern struct Point apple;
+//extern struct Point snake_head;
+
+//using namespace SNAKE_GLOBALS_H;
+
+//bool Point::at_pos(struct Point other_point){return row == other_point.row && col == other_point.col;}
 // function to display the current snake board state
-void display_board() {
-    // - display character
-    char char_at_coord {'E'};
-    std::cout << " ";
-        for (int c = 0; c < width + 2; c++) {
-            std::cout << "-";
-        }
-        std::cout << std::endl;
-        for (int r = 0; r < height; r++) {
-            std::cout << "| "; 
-            for (int c = 0; c < width; c++) {
-                // Display apple
-                if (apple.row==r && apple.col==c)
-                    {char_at_coord = '@';}
-                // Display snake head
-                else if (snake_head.row==r && snake_head.col==c)
-                    {char_at_coord = '#';}
-                // Display remaining snake array
-                else {
-                    //char_at_coord = '\0'; 
-                    char_at_coord = 96 + snake_board[r][c];
-                    //std::cout << snake_board[r][c];
-                }
-                //display character at (r, c)
-                std::cout << char_at_coord;
-            }
-            std::cout << " |" << std::endl;
-        }
-        std::cout << " ";
-        for (int c = 0; c < width + 2; c++) {
-            std::cout << "-";
-        }
-        std::cout << std::endl;
-}
+// void display_board(){
+//     std::cout << "Insert Display Here" << std::endl;
+// }
 
 // function to collect only valid player inputs
 char player_input(char last_move) {
@@ -65,9 +37,6 @@ char player_input(char last_move) {
     }
     return char_in;
 }
-
-// method to see if 2 points are the same
-bool Point::at_pos(struct Point other_point){return row == other_point.row && col == other_point.col;}
 
 int main() {
 
