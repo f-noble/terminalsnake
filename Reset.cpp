@@ -17,12 +17,13 @@ void reset_game() {
     }
     while(apple.at_pos(snake_head));
     winning = false;     // win condition (only true when full length)
-    inputted_direction = 'w'; // char in 'wasd' representing next move
+    inputted_direction = 'v'; // char in 'wasd' representing next move
     snake_length = 1;
     // - board 2D array of zeros
     for (int r = 0; r < height; r++) {
         for (int c = 0; c < width; c++) {
             snake_board[r][c] = 0;
+            snake_directions[r][c] = '*';
         }
     }
     snake_board[snake_head.row][snake_head.col] = 1;

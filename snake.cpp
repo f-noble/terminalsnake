@@ -25,15 +25,17 @@ int main() {
     
         // Update next move if player inputs one
         inputted_direction = player_input(inputted_direction);
+        // - set the direction of this element of the snake
+        snake_directions[snake_head.row][snake_head.col] = inputted_direction;
         // Move snake head coords by one according to the next move
         switch (inputted_direction) {
-        case 'w': 
+        case 'v': 
             snake_head.row --; break; 
-        case 'a':
+        case '>':
             snake_head.col --; break;
-        case 's':
+        case '^':
             snake_head.row ++; break;
-        case 'd':
+        case '<':
             snake_head.col ++; break;
         }
         // Check the bounds and possibly end game

@@ -2,6 +2,11 @@
 #include <random>
 #include "Input.hpp"
 
+// input keys
+const char up {'w'};
+const char down {'s'};
+const char left {'a'};
+const char right {'d'};
 
 // function to collect only valid player inputs
 char player_input(char last_move) {
@@ -17,8 +22,16 @@ char player_input(char last_move) {
     }
     
     std::cout << "Your input:" << char_in << "|" <<std::endl;
-    if (char_in == '\0') {
-        return last_move;
-    }
-    return char_in;
+    // return keys pressed as direction chars
+    switch (char_in) {
+        case up: 
+            return 'v';
+        case left:
+            return '>';
+        case down:
+            return '^';
+        case right:
+            return '<';
+        }
+    return last_move; // case '\0'
 }

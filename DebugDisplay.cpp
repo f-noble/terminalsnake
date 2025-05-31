@@ -27,8 +27,10 @@ void display_board() {
                 else if (snake_head.row==r && snake_head.col==c)
                     {char_at_coord = '#';}
                 // Display remaining snake array
-                else 
-                    {char_at_coord = 96 + snake_board[r][c];}
+                else if (snake_board[r][c] > 0)//{char_at_coord = 96 + snake_board[r][c];}
+                    {char_at_coord = snake_directions[r][c];}
+                else
+                    {char_at_coord = ' ';}
                 //display character at (r, c)
                 std::cout << char_at_coord;
             }
