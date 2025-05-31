@@ -4,6 +4,10 @@
 #include "SnakeGlobals.hpp"
 #include "Display.hpp"
 
+void display_start() {
+    std::cout << "Snake Game!!!\nUse the characters wasd to move" << std::endl;
+}
+
 // function to display the current snake board state
 void display_board() {
     // - display character
@@ -23,11 +27,8 @@ void display_board() {
                 else if (snake_head.row==r && snake_head.col==c)
                     {char_at_coord = '#';}
                 // Display remaining snake array
-                else {
-                    //char_at_coord = '\0'; 
-                    char_at_coord = 96 + snake_board[r][c];
-                    //std::cout << snake_board[r][c];
-                }
+                else 
+                    {char_at_coord = 96 + snake_board[r][c];}
                 //display character at (r, c)
                 std::cout << char_at_coord;
             }
@@ -38,4 +39,23 @@ void display_board() {
             std::cout << "-";
         }
         std::cout << std::endl;
+}
+
+void display_score() {
+std::cout << "Score: " << snake_length - 1 << std::endl;
+}
+
+// function to display the end-game state
+void display_results() {
+    // Display final screen
+    display_board();
+    // Print final length
+    std::cout << "Your final length was: " << snake_length << std::endl;
+    // Print whether they win or lose
+    if (winning) {
+        std::cout << "You Win!!!" << std::endl;
+    }
+    else {
+        std::cout << "You Lose ):" << std::endl;
+    }
 }

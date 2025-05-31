@@ -1,29 +1,40 @@
 #!/bin/bash
 set -e
 #set -v
+mode=${1:-"--Terminal"} # set default mode if none given
 
 # Check Directory
 partialdir=$(basename $PWD)
 echo $partialdir
 if [ $partialdir = "terminalsnake" ]; then
+    mkdir -p build # make directory if it doesn't exist
     cd build
 elif [ $partialdir != "build" ]; then
     echo Please change directory to terminalsnake or terminalsnake/build
     exit 1
 fi
 
-# Compiling and Linking
-echo Compiling with g++ in build
+# Compiling
+echo Compiling with g++ in build/
 g++ -c ../snake.cpp
-#g++ -c ../Point.cpp # -o Point.o
 g++ -c ../SnakeGlobals.cpp
-echo made all obj files
-if [ $1 = "--Debug" ]; then
-    echo Using Debug Display and Input
-    g++ -c ../Debug.cpp -o Display.o && echo success
-else
-    echo No debug
-    # compile the NCurses library here instead
-    g++ -c ../TerminalDisplay.cpp -o Display.o && echo success
+g++ -c ../Reset.cpp
+# implement MVC by compiling different display/controller implementations
+if [ $mode = "--Debug" ]; then
+    echo Using debug display and untimed input
+    g++ -c ../DebugDisplay.cpp -o Display.o
+    g++ -c ../DebugInput.cpp -o Input.o
+elif [ $mode = "--Terminal" ]; then
+    echo Using NCurses display "(not yet implemented)"
+    # eventually, compile the NCurses library and display code here instead
+    # also, use timed input
+    g++ -c ../TerminalDisplay.cpp -o Display.o
+    #g++ -c ../NCursesInput.cpp -o Input.o
+    g++ -c ../DebugInput.cpp -o Input.o #replace with above line
+else 
+    echo Given argument $mode is not recognized
+    echo Try one of: "--Debug --Terminal"
+    exit 1
 fi
-g++ SnakeGlobals.o Display.o snake.o -o snake.exe && ./snake.exe
+# Linking
+g++ SnakeGlobals.o Reset.o Display.o Input.o snake.o -o snake.exe && ./snake.exe
