@@ -30,11 +30,11 @@ elif [ $mode = "--Terminal" ]; then
     # also, use timed input
     g++ -c ../TerminalDisplay.cpp -o Display.o
     #g++ -c ../NCursesInput.cpp -o Input.o
-    g++ -c ../DebugInput.cpp -o Input.o #replace with above line
+    g++ -c ../TerminalInput.cpp -o Input.o #replace with above line
 else 
     echo Given argument $mode is not recognized
     echo Try one of: "--Debug --Terminal"
     exit 1
 fi
 # Linking
-g++ SnakeGlobals.o Reset.o Display.o Input.o snake.o -o snake.exe && ./snake.exe
+g++ SnakeGlobals.o Reset.o Display.o Input.o snake.o -lncursesw -o snake.exe && ./snake.exe
