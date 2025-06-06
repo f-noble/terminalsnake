@@ -1,3 +1,5 @@
+// Implementation of the Input that uses ncursesw6 to collect keystrokes
+
 #include <iostream>
 #include <random>
 #include <time.h>
@@ -11,7 +13,7 @@ const char down {'s'};
 const char left {'a'};
 const char right {'d'};
 
-const clock_t max_ticks {(clock_t)(0.8*CLOCKS_PER_SEC)};
+const clock_t max_ticks {(clock_t)(0.2*CLOCKS_PER_SEC)};
 
 // function to collect only valid player inputs
 char player_input(char last_move) {

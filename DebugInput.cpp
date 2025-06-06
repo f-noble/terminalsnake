@@ -1,3 +1,6 @@
+// Implementation of the Input that uses std::getline to collect keystrokes
+// Game ticks only occur each time the enter key is pressed
+
 #include <iostream>
 #include <random>
 #include "Input.hpp"

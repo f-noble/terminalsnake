@@ -1,11 +1,14 @@
+// Implementation of the Display that uses std::cout to display the game state
+// This was used for debugging when I first coded the game
+
 #include <iostream>
 
 #include "Point.hpp"
 #include "SnakeGlobals.hpp"
 #include "Display.hpp"
 
-void display_start() {
-    std::cout << "Snake Game!!!\nUse the characters wasd to move" << std::endl;
+void display_start(bool resetting) {
+    std::cout << "Snake Game!!!\nEnter the characters wasd to move" << std::endl;
 }
 
 // function to display the current snake board state
@@ -27,7 +30,7 @@ void display_board() {
                 else if (snake_head.row==r && snake_head.col==c)
                     {char_at_coord = '#';}
                 // Display remaining snake array
-                else if (snake_board[r][c] > 0)//{char_at_coord = 96 + snake_board[r][c];}
+                else if (snake_board[r][c] > 0) // {char_at_coord = 96 + snake_board[r][c];}
                     {char_at_coord = snake_directions[r][c];}
                 else
                     {char_at_coord = ' ';}
@@ -48,7 +51,7 @@ std::cout << "Score: " << snake_length - 1 << std::endl;
 }
 
 // function to display the end-game state
-void display_results() {
+bool display_results() {
     // Display final screen
     display_board();
     // Print final length
@@ -60,4 +63,14 @@ void display_results() {
     else {
         std::cout << "You Lose ):" << std::endl;
     }
+
+    // see if the player wants to restart
+    char char_in {' '};
+    std::string string_in;
+    std::cout << "Enter r to restart, or any other key to end the game: ";
+    std::getline(std::cin, string_in);
+    char_in = string_in[0];
+    if (char_in == 'r')
+        {return true;}
+    return false;
 }

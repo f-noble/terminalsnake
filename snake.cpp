@@ -1,4 +1,11 @@
+// Main file containing the actual game loop
+// The main method restarts the game loop based on whether reset was pressed
+// The main_loop method holds the calls to display and input functions
+// It also holds the bulk of logic to update the game state
+
 #include <string>
+#include <locale.h>
+#include <time.h>
 
 #include "Point.hpp"
 #include "RandomPoint.hpp"
@@ -7,12 +14,9 @@
 #include "Reset.hpp"
 #include "SnakeGlobals.hpp"
 
-
-
-
-int main() {
-
-    reset_game(); // sets up global variables
+bool main_loop(bool reset_button) {
+    bool started_game = false;
+    reset_game(reset_button); // sets up global variables
 
     // Start game loop
     while (true) {
@@ -22,7 +26,17 @@ int main() {
         display_score();
         //return 0;
 
-    
+        // give time to reorient after reset button is pressed
+        if (reset_button && !started_game) {
+            const clock_t wait_ticks_reset {(clock_t)(0.8*CLOCKS_PER_SEC)};
+            clock_t wait_start = clock();
+            clock_t elapsed_wait;
+            do {
+            elapsed_wait = clock() - wait_start;
+            } while (elapsed_wait < wait_ticks_reset);
+            started_game = true;
+        }
+        
         // Update next move if player inputs one
         inputted_direction = player_input(inputted_direction);
         // - set the direction of this element of the snake
@@ -82,9 +96,15 @@ int main() {
 
     }
 
-display_results();
-
-// Exit
-return 0;
+return display_results();
     
+}
+
+int main() {
+    setlocale(LC_ALL, ""); // needed for ncursesw, works on almost all systems
+    
+    bool resetting = false;
+    do {resetting = main_loop(resetting);} 
+        while (resetting == true);
+return 0;
 }

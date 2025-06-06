@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Bash script that handles creating build directory, compilation, and linking 
+# A different implementation of Display.cpp/Input.cpp is compiled and linked 
+# based on what argument is passed to the script 
+
 set -e
 #set -v
 mode=${1:-"--Terminal"} # set default mode if none given
@@ -19,22 +24,24 @@ echo Compiling with g++ in build/
 g++ -c ../snake.cpp
 g++ -c ../SnakeGlobals.cpp
 g++ -c ../Reset.cpp
-# implement MVC by compiling different display/controller implementations
+# partial implementation of MVC by compiling different display/controller implementations
 if [ $mode = "--Debug" ]; then
     echo Using debug display and untimed input
     g++ -c ../DebugDisplay.cpp -o Display.o
     g++ -c ../DebugInput.cpp -o Input.o
 elif [ $mode = "--Terminal" ]; then
-    echo Using NCurses display "(not yet implemented)"
-    # eventually, compile the NCurses library and display code here instead
-    # also, use timed input
+    echo Using NCursesw display
     g++ -c ../TerminalDisplay.cpp -o Display.o
-    #g++ -c ../NCursesInput.cpp -o Input.o
-    g++ -c ../TerminalInput.cpp -o Input.o #replace with above line
+    g++ -c ../TerminalInput.cpp -o Input.o 
 else 
     echo Given argument $mode is not recognized
     echo Try one of: "--Debug --Terminal"
     exit 1
 fi
+
 # Linking
-g++ SnakeGlobals.o Reset.o Display.o Input.o snake.o -lncursesw -o snake.exe && ./snake.exe
+if [ $mode = "--Terminal" ]; then
+    g++ SnakeGlobals.o Reset.o Display.o Input.o snake.o -lncursesw -o snake.exe && ./snake.exe
+else
+    g++ SnakeGlobals.o Reset.o Display.o Input.o snake.o -o snake.exe && ./snake.exe
+fi

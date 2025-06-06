@@ -1,3 +1,5 @@
+// Class that handles generating random points within the game board
+
 #ifndef POINT_GENERATOR_H
 #define POINT_GENERATOR_H
 
@@ -6,8 +8,6 @@
 #include "SnakeGlobals.hpp"
 
 class PointGenerator {
-// private:
-
 public:
     std::mt19937 gen;
     int board_height, board_width;
@@ -16,7 +16,8 @@ public:
 
     PointGenerator(int h, int w){
     std::random_device rd;  // a seed source for the random number engine
-    std::mt19937 gen(rd()); // mersenne_twister_engine seeded with rd()
+    gen = std::mt19937(rd()); // mersenne_twister_engine seeded with rd()
+    
     board_height = h;
     board_width = w;
     }

@@ -1,13 +1,16 @@
+// Redeclares SnakeGlobals.cpp as external to make variables globally accessible
+// Also contains definitions for height and width if you want to change them
+// The game works for any height or width, given your terminal is big enough
+
 #ifndef SNAKE_GLOBALS_H
 #define SNAKE_GLOBALS_H
 
 #include "Point.hpp"
 #include "RandomPoint.hpp"
+
 // size of the board
-#define height 3
-#define width 4
-//extern const int height {3}; 
-//extern const int width{3};
+#define height 12
+#define width 16
 
 extern int snake_board[height][width];
 extern char snake_directions[height][width];
