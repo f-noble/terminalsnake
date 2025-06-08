@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Bash script that handles creating build directory, compilation, and linking 
 # A different implementation of Display.cpp/Input.cpp is compiled and linked 
