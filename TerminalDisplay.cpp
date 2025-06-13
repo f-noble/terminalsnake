@@ -7,6 +7,10 @@
 #include "SnakeGlobals.hpp"
 #include "Display.hpp"
 
+#define head_str "\u2588\u2588"  // 2 unicode full blocks
+#define body_str "\u2592\u2592"  // 2 unicode light grey blocks
+#define apple_str "\u2591\u2591" // 2 unicode dark grey blocks
+
 WINDOW *game_win;
 
 void display_start(bool reset_button_pressed) {
@@ -72,13 +76,13 @@ void display_board() {
                 switch(char_at_coord)
                     {
                     case '<': case '>': case '^': case 'v': // 2 unicode solid blocks
-                        mvwaddstr(game_win, r+1, c*2+1, "\u2592\u2592"); 
+                        mvwaddstr(game_win, r+1, c*2+1, body_str); 
                         break;
                     case '@':                           // 2 unicode dark grey blocks
-                        mvwaddstr(game_win, r+1, c*2+1, "\u2591\u2591");
+                        mvwaddstr(game_win, r+1, c*2+1, apple_str);
                         break;
                     case '#':                           // 2 unicode light grey blocks
-                        mvwaddstr(game_win, r+1, c*2+1, "\u2588\u2588");
+                        mvwaddstr(game_win, r+1, c*2+1, head_str);
                         break; 
                     default:                            // 2 empty spaces
                         mvwaddstr(game_win, r+1, c*2+1, "  ");

@@ -4,10 +4,11 @@
 # A different implementation of Display.cpp/Input.cpp is compiled and linked 
 # based on what argument is passed to the script 
 
+Compiler=g++ # SET TO THE C++ COMPILER YOU WANT TO USE
+
 set -e
 #set -v
 mode=${1:-"--Terminal"} # set default mode if none given
-
 # Check Directory
 partialdir=$(basename $PWD)
 echo $partialdir
@@ -20,19 +21,19 @@ elif [ $partialdir != "build" ]; then
 fi
 
 # Compiling
-echo Compiling with g++ in build/
-g++ -c ../snake.cpp
-g++ -c ../SnakeGlobals.cpp
-g++ -c ../Reset.cpp
+echo Compiling with "$Compiler" in build/
+"$Compiler" -c ../snake.cpp
+"$Compiler" -c ../SnakeGlobals.cpp
+"$Compiler" -c ../Reset.cpp
 # partial implementation of MVC by compiling different display/controller implementations
 if [ $mode = "--Debug" ]; then
     echo Using debug display and untimed input
-    g++ -c ../DebugDisplay.cpp -o Display.o
-    g++ -c ../DebugInput.cpp -o Input.o
+    "$Compiler" -c ../DebugDisplay.cpp -o Display.o
+    "$Compiler" -c ../DebugInput.cpp -o Input.o
 elif [ $mode = "--Terminal" ]; then
     echo Using NCursesw display
-    g++ -c ../TerminalDisplay.cpp -o Display.o
-    g++ -c ../TerminalInput.cpp -o Input.o 
+    "$Compiler" -c ../TerminalDisplay.cpp -o Display.o
+    "$Compiler" -c ../TerminalInput.cpp -o Input.o 
 else 
     echo Given argument $mode is not recognized
     echo Try one of: "--Debug --Terminal"
@@ -41,7 +42,7 @@ fi
 
 # Linking
 if [ $mode = "--Terminal" ]; then
-    g++ SnakeGlobals.o Reset.o Display.o Input.o snake.o -lncursesw -o snake.exe && ./snake.exe
+    "$Compiler" SnakeGlobals.o Reset.o Display.o Input.o snake.o -lncursesw -o snake.exe && ./snake.exe
 else
-    g++ SnakeGlobals.o Reset.o Display.o Input.o snake.o -o snake.exe && ./snake.exe
+    "$Compiler" SnakeGlobals.o Reset.o Display.o Input.o snake.o -o snake.exe && ./snake.exe
 fi
